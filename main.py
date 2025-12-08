@@ -1,9 +1,8 @@
 import pandas as pd
 import numpy as np
 from itertools import permutations
-import tkinter as tk
-from tkinter import ttk, messagebox
 import os
+import traceback
 
 
 # ==================== MÉTODOS DE AGREGACIÓN DE RANKINGS ====================
@@ -328,105 +327,75 @@ def procesar_categorias(df_filtrado):
     return resultados_totales
 
 
-# ==================== INTERFAZ GRÁFICA PARA FILTROS ====================
+# ==================== INTERFAZ POR LÍNEA DE COMANDOS PARA FILTROS ====================
 
 class FiltroApp:
     def __init__(self, df):
         self.df = df
-        self.root = tk.Tk()
-        self.root.title("Filtros Demográficos - Análisis de Rankings")
-        self.root.geometry("600x700")
-
-        # Variables para filtros
         self.filtros = {
             'rango_edad': [],
             'genero': [],
             'facultad': [],
             'carrera': []
         }
+        self.setup_filtros_cli()
 
-        self.setup_ui()
-
-    def setup_ui(self):
-        # Título
-        title_label = ttk.Label(self.root, text="FILTROS DEMOGRÁFICOS",
-                                font=("Arial", 16, "bold"))
-        title_label.pack(pady=10)
-
-        # Frame principal
-        main_frame = ttk.Frame(self.root)
-        main_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+    def setup_filtros_cli(self):
+        """Configura filtros usando interfaz de línea de comandos."""
+        print("\n" + "=" * 80)
+        print("FILTROS DEMOGRÁFICOS")
+        print("=" * 80)
 
         # 1. RANGO DE EDAD
-        ttk.Label(main_frame, text="Rango de Edad:", font=("Arial", 11, "bold")).grid(row=0, column=0, sticky=tk.W,
-                                                                                      pady=(0, 5))
-
-        self.edad_vars = {}
+        print("\n1. RANGO DE EDAD:")
         edades = sorted(self.df['¿Cuál es su rango de edad?'].dropna().unique())
-        for i, edad in enumerate(edades):
-            var = tk.BooleanVar()
-            self.edad_vars[edad] = var
-            cb = ttk.Checkbutton(main_frame, text=edad, variable=var)
-            cb.grid(row=1 + i // 3, column=i % 3, sticky=tk.W, padx=5)
-
-        # Separador
-        ttk.Separator(main_frame, orient=tk.HORIZONTAL).grid(row=5, column=0, columnspan=3, sticky=tk.EW, pady=10)
+        for i, edad in enumerate(edades, 1):
+            print(f"   {i}. {edad}")
+        
+        seleccion = input("Selecciona números separados por comas (ej: 1,2,3) o presiona Enter para todos: ").strip()
+        if seleccion:
+            try:
+                indices = [int(x.strip()) - 1 for x in seleccion.split(',')]
+                self.filtros['rango_edad'] = [edades[i] for i in indices if 0 <= i < len(edades)]
+            except:
+                self.filtros['rango_edad'] = list(edades)
+        else:
+            self.filtros['rango_edad'] = list(edades)
 
         # 2. GÉNERO
-        ttk.Label(main_frame, text="Género:", font=("Arial", 11, "bold")).grid(row=6, column=0, sticky=tk.W,
-                                                                               pady=(0, 5))
-
-        self.genero_vars = {}
+        print("\n2. GÉNERO:")
         generos = sorted(self.df['Género:'].dropna().unique())
-        for i, genero in enumerate(generos):
-            var = tk.BooleanVar()
-            self.genero_vars[genero] = var
-            cb = ttk.Checkbutton(main_frame, text=genero, variable=var)
-            cb.grid(row=7, column=i, sticky=tk.W, padx=5)
-
-        # Separador
-        ttk.Separator(main_frame, orient=tk.HORIZONTAL).grid(row=8, column=0, columnspan=3, sticky=tk.EW, pady=10)
+        for i, genero in enumerate(generos, 1):
+            print(f"   {i}. {genero}")
+        
+        seleccion = input("Selecciona números separados por comas (ej: 1,2) o presiona Enter para todos: ").strip()
+        if seleccion:
+            try:
+                indices = [int(x.strip()) - 1 for x in seleccion.split(',')]
+                self.filtros['genero'] = [generos[i] for i in indices if 0 <= i < len(generos)]
+            except:
+                self.filtros['genero'] = list(generos)
+        else:
+            self.filtros['genero'] = list(generos)
 
         # 3. FACULTAD
-        ttk.Label(main_frame, text="Facultad:", font=("Arial", 11, "bold")).grid(row=9, column=0, sticky=tk.W,
-                                                                                 pady=(0, 5))
-
-        self.facultad_vars = {}
+        print("\n3. FACULTAD:")
         facultades = sorted(self.df['¿A que facultad perteneces?'].dropna().unique())
+        for i, facultad in enumerate(facultades, 1):
+            print(f"   {i}. {facultad}")
+        
+        seleccion = input("Selecciona números separados por comas (ej: 1,2) o presiona Enter para todos: ").strip()
+        if seleccion:
+            try:
+                indices = [int(x.strip()) - 1 for x in seleccion.split(',')]
+                self.filtros['facultad'] = [facultades[i] for i in indices if 0 <= i < len(facultades)]
+            except:
+                self.filtros['facultad'] = list(facultades)
+        else:
+            self.filtros['facultad'] = list(facultades)
 
-        # Frame con scroll para facultades
-        facultad_frame = ttk.Frame(main_frame)
-        facultad_frame.grid(row=10, column=0, columnspan=3, sticky=tk.W)
-
-        canvas = tk.Canvas(facultad_frame, height=100)
-        scrollbar = ttk.Scrollbar(facultad_frame, orient=tk.VERTICAL, command=canvas.yview)
-        scrollable_frame = ttk.Frame(canvas)
-
-        scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-
-        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
-
-        for i, facultad in enumerate(facultades):
-            var = tk.BooleanVar()
-            self.facultad_vars[facultad] = var
-            cb = ttk.Checkbutton(scrollable_frame, text=facultad, variable=var)
-            cb.pack(anchor=tk.W, padx=5, pady=2)
-
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-        # Separador
-        ttk.Separator(main_frame, orient=tk.HORIZONTAL).grid(row=11, column=0, columnspan=3, sticky=tk.EW, pady=10)
-
-        # 4. CARRERA
-        ttk.Label(main_frame, text="Carrera (opcional):", font=("Arial", 11, "bold")).grid(row=12, column=0,
-                                                                                           sticky=tk.W, pady=(0, 5))
-
-        # Obtener todas las carreras únicas
+        # 4. CARRERA (opcional)
+        print("\n4. CARRERA (opcional):")
         todas_carreras = set()
         carrera_cols = [col for col in self.df.columns if 'carrera' in col.lower() and 'estudiando' in col.lower()]
         for col in carrera_cols:
@@ -434,127 +403,24 @@ class FiltroApp:
             for carrera in carreras_col:
                 if carrera and str(carrera).strip():
                     todas_carreras.add(str(carrera).strip())
-
-        self.carrera_vars = {}
+        
         carreras_lista = sorted(todas_carreras)
-
-        # Entry para búsqueda
-        carrera_search_frame = ttk.Frame(main_frame)
-        carrera_search_frame.grid(row=13, column=0, columnspan=3, sticky=tk.EW, pady=(0, 5))
-
-        ttk.Label(carrera_search_frame, text="Buscar:").pack(side=tk.LEFT, padx=(0, 5))
-        self.carrera_search_var = tk.StringVar()
-        self.carrera_search_var.trace('w', self.filtrar_carreras)
-        search_entry = ttk.Entry(carrera_search_frame, textvariable=self.carrera_search_var, width=30)
-        search_entry.pack(side=tk.LEFT)
-
-        # Listbox para carreras
-        carrera_list_frame = ttk.Frame(main_frame)
-        carrera_list_frame.grid(row=14, column=0, columnspan=3, sticky=tk.NSEW, pady=(0, 10))
-
-        self.carrera_listbox = tk.Listbox(carrera_list_frame, selectmode=tk.MULTIPLE, height=6)
-        scrollbar_carrera = ttk.Scrollbar(carrera_list_frame, orient=tk.VERTICAL, command=self.carrera_listbox.yview)
-        self.carrera_listbox.configure(yscrollcommand=scrollbar_carrera.set)
-
-        self.carrera_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar_carrera.pack(side=tk.RIGHT, fill=tk.Y)
-
-        # Almacenar todas las carreras
-        self.todas_carreras_lista = carreras_lista
-        self.actualizar_lista_carreras(carreras_lista)
-
-        # Botones
-        button_frame = ttk.Frame(self.root)
-        button_frame.pack(pady=20)
-
-        ttk.Button(button_frame, text="Aplicar Filtros y Analizar",
-                   command=self.aplicar_filtros).pack(side=tk.LEFT, padx=5)
-
-        ttk.Button(button_frame, text="Seleccionar Todo",
-                   command=self.seleccionar_todo).pack(side=tk.LEFT, padx=5)
-
-        ttk.Button(button_frame, text="Limpiar Todo",
-                   command=self.limpiar_todo).pack(side=tk.LEFT, padx=5)
-
-        ttk.Button(button_frame, text="Salir",
-                   command=self.root.quit).pack(side=tk.LEFT, padx=5)
-
-        # Configurar grid weights
-        for i in range(3):
-            main_frame.columnconfigure(i, weight=1)
-
-    def actualizar_lista_carreras(self, carreras):
-        """Actualiza la lista de carreras en el Listbox."""
-        self.carrera_listbox.delete(0, tk.END)
-        for carrera in carreras:
-            self.carrera_listbox.insert(tk.END, carrera)
-
-    def filtrar_carreras(self, *args):
-        """Filtra las carreras según el texto de búsqueda."""
-        busqueda = self.carrera_search_var.get().lower()
-        if busqueda:
-            carreras_filtradas = [c for c in self.todas_carreras_lista if busqueda in c.lower()]
-        else:
-            carreras_filtradas = self.todas_carreras_lista
-
-        self.actualizar_lista_carreras(carreras_filtradas)
-
-    def seleccionar_todo(self):
-        """Selecciona todas las opciones en todos los filtros."""
-        for var in self.edad_vars.values():
-            var.set(True)
-        for var in self.genero_vars.values():
-            var.set(True)
-        for var in self.facultad_vars.values():
-            var.set(True)
-        # Para carreras, seleccionar todas las visibles
-        self.carrera_listbox.selection_set(0, tk.END)
-
-    def limpiar_todo(self):
-        """Limpia todas las selecciones."""
-        for var in self.edad_vars.values():
-            var.set(False)
-        for var in self.genero_vars.values():
-            var.set(False)
-        for var in self.facultad_vars.values():
-            var.set(False)
-        self.carrera_listbox.selection_clear(0, tk.END)
-        self.carrera_search_var.set("")
-        self.actualizar_lista_carreras(self.todas_carreras_lista)
-
-    def aplicar_filtros(self):
-        """Aplica los filtros seleccionados."""
-        # Obtener rangos de edad seleccionados
-        self.filtros['rango_edad'] = [edad for edad, var in self.edad_vars.items() if var.get()]
-
-        # Obtener géneros seleccionados
-        self.filtros['genero'] = [genero for genero, var in self.genero_vars.items() if var.get()]
-
-        # Obtener facultades seleccionadas
-        self.filtros['facultad'] = [facultad for facultad, var in self.facultad_vars.items() if var.get()]
-
-        # Obtener carreras seleccionadas
-        selecciones = self.carrera_listbox.curselection()
-        self.filtros['carrera'] = [self.carrera_listbox.get(i) for i in selecciones]
-
-        # Verificar que al menos haya algún criterio seleccionado
-        total_selecciones = (len(self.filtros['rango_edad']) +
-                             len(self.filtros['genero']) +
-                             len(self.filtros['facultad']) +
-                             len(self.filtros['carrera']))
-
-        if total_selecciones == 0:
-            messagebox.showwarning("Advertencia",
-                                   "No has seleccionado ningún filtro. Se analizarán todos los datos.")
-            # Establecer filtros vacíos para procesar todo
-            self.filtros = {k: [] for k in self.filtros}
-
+        if carreras_lista:
+            for i, carrera in enumerate(carreras_lista, 1):
+                print(f"   {i}. {carrera}")
+            
+            seleccion = input("Selecciona números separados por comas (ej: 1,3) o presiona Enter para ninguno: ").strip()
+            if seleccion:
+                try:
+                    indices = [int(x.strip()) - 1 for x in seleccion.split(',')]
+                    self.filtros['carrera'] = [carreras_lista[i] for i in indices if 0 <= i < len(carreras_lista)]
+                except:
+                    self.filtros['carrera'] = []
+        
         print("\nFiltros aplicados:")
         for key, value in self.filtros.items():
             if value:
-                print(f"  {key}: {value}")
-
-        self.root.destroy()
+                print(f"  {key}: {len(value)} opción(es) seleccionada(s)")
 
 
 # ==================== FUNCIÓN PRINCIPAL ====================
@@ -578,9 +444,8 @@ def main():
         print(f"✓ Total de respuestas: {len(df)}")
 
         # Mostrar interfaz para filtros
-        print("\nAbriendo interfaz de filtros...")
+        print("\nConfigurando filtros...")
         app = FiltroApp(df)
-        app.root.mainloop()
 
         # Aplicar filtros
         df_filtrado = procesar_con_filtros(df, app.filtros)

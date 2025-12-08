@@ -1,0 +1,135 @@
+================================================================================
+TODAS LAS TABLAS PARA TU DOCUMENTO - SECCIÓN 4.4
+================================================================================
+
+ESCENARIO 1: DESARROLLO PROFESIONAL
+================================================================================
+
+Tabla 5. Rankings por Método Borda - Desarrollo Profesional
+
+| Posición | Alternativa | Puntaje Borda |
+|----------|-------------|---------------|
+| 1 | Ferias de Empleo y Prácticas Especializadas | 195 |
+| 2 | Talleres de Habilidades Profesionales Esenciales | 175 |
+| 3 | Talleres de Herramientas Profesionales (Workshops IEEE) | 171 |
+| 4 | Proyectos Interdisciplinarios (Hackathons / Challenges IEEE) | 156 |
+| 5 | Charlas con Profesionales Destacados (IEEE Technical Talks) | 148 |
+| 6 | Visitas Técnicas a Empresas (IEEE Industrial Visits) | 147 |
+| 7 | Programas de Mentoría Personalizada (IEEE Mentoring Program) | 142 |
+
+Tabla 6. Rankings por Método Schulze - Desarrollo Profesional
+
+| Posición | Alternativa | Fuerza Neta Schulze |
+|----------|-------------|-------------------|
+| 1 | Ferias de Empleo y Prácticas Especializadas | 195 |
+| 2 | Talleres de Herramientas Profesionales (Workshops IEEE) | 121 |
+| 3 | Talleres de Habilidades Profesionales Esenciales | 68 |
+| 4 | Proyectos Interdisciplinarios (Hackathons / Challenges IEEE) | -6 |
+| 5 | Visitas Técnicas a Empresas (IEEE Industrial Visits) | -69 |
+| 6 | Charlas con Profesionales Destacados (IEEE Technical Talks) | -153 |
+| 7 | Programas de Mentoría Personalizada (IEEE Mentoring Program) | -156 |
+
+Tabla 7. Rankings por Método Kemeny-Young - Desarrollo Profesional
+
+| Posición | Alternativa | Puntaje Kemeny-Young |
+|----------|-------------|-------------------|
+| 1 | Ferias de Empleo y Prácticas Especializadas | 66 |
+| 2 | Talleres de Herramientas Profesionales (Workshops IEEE) | 24 |
+| 3 | Talleres de Habilidades Profesionales Esenciales | 36 |
+| 4 | Proyectos Interdisciplinarios (Hackathons / Challenges IEEE) | 12 |
+| 5 | Visitas Técnicas a Empresas (IEEE Industrial Visits) | 8 |
+| 6 | Charlas con Profesionales Destacados (IEEE Technical Talks) | 0 |
+| 7 | Programas de Mentoría Personalizada (IEEE Mentoring Program) | 0 |
+
+================================================================================
+
+ESCENARIO 2: INFRAESTRUCTURA ACADÉMICA
+================================================================================
+
+Tabla 8. Rankings por Método Borda - Infraestructura Académica
+
+| Posición | Alternativa | Puntaje Borda |
+|----------|-------------|---------------|
+| 1 | Renovación de laboratorios especializados | 212 |
+| 2 | Modernización de aulas | 197 |
+| 3 | Mejora de la conectividad Wi-Fi | 174 |
+| 4 | Expansión de áreas de estudio y coworking | 145 |
+| 5 | Mejora de la biblioteca | 145 |
+| 6 | Incremento de salas con videoconferencia | 136 |
+| 7 | Ampliación de zonas de descanso | 125 |
+
+Tabla 9. Rankings por Método Schulze - Infraestructura Académica
+
+| Posición | Alternativa | Fuerza Neta Schulze |
+|----------|-------------|-------------------|
+| 1 | Renovación de laboratorios especializados | 212 |
+| 2 | Modernización de aulas | 143 |
+| 3 | Mejora de la conectividad Wi-Fi | 66 |
+| 4 | Expansión de áreas de estudio y coworking | -43 |
+| 5 | Mejora de la biblioteca | -44 |
+| 6 | Incremento de salas con videoconferencia | -134 |
+| 7 | Ampliación de zonas de descanso | -200 |
+
+Tabla 10. Rankings por Método Kemeny-Young - Infraestructura Académica
+
+| Posición | Alternativa | Puntaje Kemeny-Young |
+|----------|-------------|-------------------|
+| 1 | Renovación de laboratorios especializados | 100 |
+| 2 | Modernización de aulas | 86 |
+| 3 | Mejora de la conectividad Wi-Fi | 36 |
+| 4 | Expansión de áreas de estudio y coworking | 14 |
+| 5 | Mejora de la biblioteca | 8 |
+| 6 | Incremento de salas con videoconferencia | 6 |
+| 7 | Ampliación de zonas de descanso | 0 |
+
+================================================================================
+
+ESCENARIO 3: BIENESTAR ESTUDIANTIL
+================================================================================
+
+Tabla 11. Rankings por Método Borda - Bienestar Estudiantil
+
+| Posición | Alternativa | Puntaje Borda |
+|----------|-------------|---------------|
+| 1 | Programas deportivos | 203 |
+| 2 | Talleres de salud mental y bienestar emocional | 194 |
+| 3 | Clubes estudiantiles y financiamiento de proyectos | 171 |
+| 4 | Actividades de integración y networking | 155 |
+| 5 | Actividades culturales | 150 |
+| 6 | Espacios verdes y áreas de descanso | 142 |
+| 7 | Iniciativas de sostenibilidad | 119 |
+
+Tabla 12. Rankings por Método Schulze - Bienestar Estudiantil
+
+| Posición | Alternativa | Fuerza Neta Schulze |
+|----------|-------------|-------------------|
+| 1 | Programas deportivos | 203 |
+| 2 | Talleres de salud mental y bienestar emocional | 140 |
+| 3 | Clubes estudiantiles y financiamiento de proyectos | 63 |
+| 4 | Actividades culturales | -9 |
+| 5 | Actividades de integración y networking | -88 |
+| 6 | Espacios verdes y áreas de descanso | -101 |
+| 7 | Iniciativas de sostenibilidad | -208 |
+
+Tabla 13. Rankings por Método Kemeny-Young - Bienestar Estudiantil
+
+| Posición | Alternativa | Puntaje Kemeny-Young |
+|----------|-------------|-------------------|
+| 1 | Programas deportivos | 82 |
+| 2 | Talleres de salud mental y bienestar emocional | 74 |
+| 3 | Clubes estudiantiles y financiamiento de proyectos | 34 |
+| 4 | Actividades culturales | 16 |
+| 5 | Espacios verdes y áreas de descanso | 12 |
+| 6 | Actividades de integración y networking | 18 |
+| 7 | Iniciativas de sostenibilidad | 0 |
+
+================================================================================
+
+FIN DE SECCIÓN 4.4.1 - RANKINGS GRUPALES POR MÉTODO
+
+NOTA: Para la Sección 4.4.2 (Distancias Respecto a Rankings Individuales),
+consulte el archivo: DISTANCIAS_INDIVIDUALES_TABLAS.md
+
+Todas las figuras están disponibles como archivos PNG a 300 DPI
+Listas para insertar directamente en tu documento
+
